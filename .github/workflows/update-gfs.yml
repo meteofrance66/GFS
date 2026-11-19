@@ -5,7 +5,7 @@ on:
   schedule:
     # Vérification toutes les 10 minutes ; GitHub peut retarder le démarrage.
     # Le script ne reconstruit pas un cycle déjà publié.
-    - cron: "7,17,27,37,47,57 * * * *"
+    - cron: "47 8 * * *"
 
 permissions:
   contents: write
