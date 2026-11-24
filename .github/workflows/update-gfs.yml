@@ -3,8 +3,7 @@ name: Mise à jour GFS France
 on:
   schedule:
     # GitHub lit ces heures en UTC : 8h30 UTC (9h30 Paris, après le run 06Z) et 16h45 UTC (17h45 Paris, après le run 12Z).
-    - cron: "35 8 * * *"
-    - cron: "45 19 * * *"
+    - cron: "35 1,7,13,19 * * *"
   workflow_dispatch:
 
 permissions:
