@@ -2,8 +2,14 @@ name: Mise à jour GFS France
 
 on:
   schedule:
-    # GitHub lit ces heures en UTC : 8h30 UTC (9h30 Paris, après le run 06Z) et 16h45 UTC (17h45 Paris, après le run 12Z).
-    - cron: "35 1,7,13,19 * * *"
+    # Heures en UTC. T = heure du cycle GFS (00, 06, 12, 18 Z). NOAA dépose un cycle sur NOMADS petit à petit (relevé des 24 et 25 nov. 2026) :
+    # +72 h vers T+3 h 52, +120 h vers T+4 h 03, +240 h vers T+4 h 34, +360 h vers T+5 h 05.
+    # GitHub démarre une tâche planifiée 52 à 75 min APRÈS l'heure du cron (mesuré sur 7 passages) : on tire donc en avance.
+    # Ancien réglage (35 1,7,13,19) : à T+1 h 35, rien du cycle n'est sorti, le script reprenait le cycle précédent, publié vers T+10 h 50.
+    # 1) Run partiel : démarre vers T+4 h 05 à T+4 h 25 et publie ce qui est déjà sorti (au moins 72 h) ; trop tôt, il sort sans rien faire.
+    - cron: "10 3,9,15,21 * * *"
+    # 2) Run complet : démarre vers T+5 h 20, quand les 360 h sont sorties ; le script reprend le run partiel et le complète (jamais deux fois le même).
+    - cron: "30 4,10,16,22 * * *"
   workflow_dispatch:
 
 permissions:
